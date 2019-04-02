@@ -1,21 +1,43 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>TI</title>
+    <title>Clon MS-DOS GORILLA</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="estilos.css" type="text/css" rel="stylesheet"></link>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="inicio.js" type="text/javascript"></script>
   </head>
   <body>
-      <h1>HOLI</h1>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <div id="Titulo">
+      <p id="texto_titulo">MS-DOS BUNNY</p>
+    </div>
+    <div id="container">
+      <div class="jugadores">
+        <div id="jugador_1">
+          Jugador 1
+          <br/>
+          <label for="angulo_j1">Angulo:</label>
+          <input id="angulo_j1" maxlength="3">
+          <br/>
+          <label for="velocidad_j1">Velocidad:</label>
+          <input id="velocidad_j1" maxlength="3">
+        </div>
+        <div id="jugador_2">
+          Jugador 2
+          <br/>
+          <label for="angulo_j2">Angulo:</label>
+          <input id="angulo_j2" maxlength="3">
+          <br/>
+          <label for="velocidad_j1">Velocidad:</label>
+          <input id="velocidad_j1" maxlength="3">
+        </div>
+      </div>
+      <canvas id="canvas" width="640" height="350"></canvas>
+    </div>
   </body>
 </html>
