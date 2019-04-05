@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <title>Clon MS-DOS GORILLA</title>
     <!-- Required meta tags -->
@@ -17,9 +17,9 @@
       <p id="texto_titulo">MS-DOS BUNNY</p>
     </div>
     <div id="container">
-      <div class="jugadores">
+      <div class="jugadores" id="jugadores">
         <div id="jugador_1">
-          Jugador 1
+            <label id="lab_j1">Jugador 1</label>
           <br/>
           <label for="angulo_j1">Angulo:</label>
           <input id="angulo_j1" maxlength="3">
@@ -28,16 +28,37 @@
           <input id="velocidad_j1" maxlength="3">
         </div>
         <div id="jugador_2">
-          Jugador 2
+          <label id="lab_j2">Jugador 2</label>
           <br/>
           <label for="angulo_j2">Angulo:</label>
           <input id="angulo_j2" maxlength="3">
           <br/>
-          <label for="velocidad_j1">Velocidad:</label>
-          <input id="velocidad_j1" maxlength="3">
+          <label for="velocidad_j2">Velocidad:</label>
+          <input id="velocidad_j2" maxlength="3">
         </div>
       </div>
+      <div id="inicio">
+        <label for="nombre_j1">Nombre J1:</label>
+        <input id="nombre_j1" maxlength="10">
+        <br/>
+        <label for="nombre_j2">Nombre J2:</label>
+        <input id="nombre_j2" maxlength="10">
+        <br/>
+        <br/>
+        <Button id="btn_inicio" onclick="inicia()">Iniciar</Button>
+        <br/>
+        <br/>
+        <label id="alerta">Campos vacios</label>
+      </div>
+      
       <canvas id="canvas" width="640" height="350"></canvas>
     </div>
   </body>
+  <footer>
+    <div id="text_foot">
+      <p>Clon del juego MS-DOS GORRILLA</p>
+      <p>Hecho para la materia de Tecnología Informática</p>
+      <p>UASLP</p>
+    </div>
+  </footer>
 </html>
