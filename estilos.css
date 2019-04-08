@@ -53,19 +53,19 @@ body {
   #nombre_j1 {
     text-align: center;
     /*float: left;*/
-    border: 1px inset gray;
+    border: 1px inset black;
     width: 150px;
   }
 
   #nombre_j2 {
     text-align: center;
     /*float: left;*/
-    border: 1px inset gray;
+    border: 1px inset black;
     width: 150px;
   }
   
   #btn_inicio{
-    background-color:lightcoral;
+    background-color:yellowgreen;
     border: none;
     border-radius: 8px;
     font-size: 15px;
@@ -87,7 +87,7 @@ body {
   }
   
   input {
-    background: green;
+    background: blue;
     width: 50px;
     border: none;
     color: #fff;
@@ -110,7 +110,7 @@ body {
   }
   
   #canvas {
-    background-color: green;
+    background-color: blue;
     margin: 0 auto;
     border: 5px solid black;
     border-radius: 15px;
