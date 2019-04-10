@@ -181,6 +181,7 @@ function drawSun() {
 }
 
 function drawScenario(){
+  drawSun();
   canvas.width = canvas.width;
   contexto.beginPath();
   contexto.arc(80, 420, 250, 1*Math.PI,2*Math.PI);
@@ -214,11 +215,11 @@ function drawScenario(){
   for(var i=0; i<10;i++){
     var n = Math.round((Math.random()*2)+1);
     var alto = Math.round((Math.random()*150)+100);
-    var ancho = Math.round((Math.random()*100)+50);
+    //var ancho = Math.round((Math.random()*100)+50);
     console.log(n);
     //console.log(edificios[n]);
-    createImage(edificios[n],xc,alto,ancho);
-    xc = xc + ancho;
+    createImage(edificios[n],xc,alto);
+    xc = xc + 70;
   }
   
   var img1 = document.getElementById("conejo");
@@ -228,14 +229,14 @@ function drawScenario(){
   contexto.drawImage(img2, posx2, posy2,100,50);
 }
 
-function createImage(imagen, xc,alto,ancho){
+function createImage(imagen, xc,alto){
   base_image = new Image();
   console.log(imagen);
   base_image.src = imagen;
   base_image.onload = function(){
     console.log(xc);
     //var alto = (Math.random()*150)+250; w h
-    context.drawImage(this, xc, 350-alto,ancho,alto);
+    contexto.drawImage(this, xc, 350-alto,70,alto);
   }
 }
 
