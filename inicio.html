@@ -19,23 +19,25 @@
       <p id="texto_titulo">MS-DOS BUNNY</p>
     </div>
     <div id="container">
+      <img id="conejo" width="100" height="50" src="modelo.png" alt="conejo">
+      <img id="conejo2" width="100" height="50" src="modelo2.png" alt="conejo2">
       <div class="jugadores" id="jugadores">
         <div id="jugador_1">
             <label id="lab_j1">Jugador 1</label>
           <br/>
-          <label for="angulo_j1">Angulo:</label>
+          <label id="labang1" for="angulo_j1">Angulo:</label>
           <input id="angulo_j1" maxlength="3">
           <br/>
-          <label for="velocidad_j1">Velocidad:</label>
+          <label id="labvel1" for="velocidad_j1">Velocidad:</label>
           <input id="velocidad_j1" maxlength="3">
         </div>
         <div id="jugador_2">
           <label id="lab_j2">Jugador 2</label>
           <br/>
-          <label for="angulo_j2">Angulo:</label>
+          <label id="labang2" for="angulo_j2">Angulo:</label>
           <input id="angulo_j2" maxlength="3">
           <br/>
-          <label for="velocidad_j2">Velocidad:</label>
+          <label id="labvel2" for="velocidad_j2">Velocidad:</label>
           <input id="velocidad_j2" maxlength="3">
         </div>
       </div>
@@ -54,6 +56,10 @@
       </div>
       
       <canvas id="canvas" width="640" height="350"></canvas>
+    </div>
+    <br>
+    <div id="Titulo">
+      <label id="puntaje"></label>
     </div>
   </body>
   <footer>
