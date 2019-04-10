@@ -208,12 +208,35 @@ function drawScenario(){
   contexto.lineWidth = 2;
   contexto.strokeStyle = "black";
   contexto.stroke();
+  // draw buildings
+  var xc = 0;
+  var edificios = ['','edificio1.png','edificio2.png','edificio3.png'];
+  for(var i=0; i<10;i++){
+    var n = Math.round((Math.random()*2)+1);
+    var alto = Math.round((Math.random()*150)+100);
+    var ancho = Math.round((Math.random()*100)+50);
+    console.log(n);
+    //console.log(edificios[n]);
+    createImage(edificios[n],xc,alto,ancho);
+    xc = xc + ancho;
+  }
   
   var img1 = document.getElementById("conejo");
   contexto.drawImage(img1, posx1, posy1,100,50);
 
   var img2 = document.getElementById("conejo2");
   contexto.drawImage(img2, posx2, posy2,100,50);
+}
+
+function createImage(imagen, xc,alto,ancho){
+  base_image = new Image();
+  console.log(imagen);
+  base_image.src = imagen;
+  base_image.onload = function(){
+    console.log(xc);
+    //var alto = (Math.random()*150)+250; w h
+    context.drawImage(this, xc, 350-alto,ancho,alto);
+  }
 }
 
 function dibujaProyectil()

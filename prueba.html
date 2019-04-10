@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+        <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+    <script src="../Scripts/jquery-1.12.4.min.js"></script>
+</head>
+<body>
+    <span id="click">start</span>
+    <span id="Restart">Restart</span>
+    <canvas id="myCanvas" class="center-block" width="800" height="400">
+        Canvas not supported!
+    </canvas>
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        var draw = 0;
+        var stepDraw = 0;
+        ctx.strokeStyle = "#FF0000";
+        ctx.translate(0.5, 0.5);
+        var delay = 30;
+        var drawing = 0;
+           
+        //draw canvas
+        function drawCircle(steps) {
+            draw = ((2 * Math.PI) / steps);
+            stepDraw = draw;
+            drawing = setInterval(function () {
+                ctx.beginPath();
+                ctx.arc(400, 200, 120, draw, draw + stepDraw, false);
+                ctx.stroke();
+                draw += stepDraw;
+            }, delay)
+        }
+
+
+        $("#click").click(function () {
+            drawCircle(120);
+        });
+
+        $("#Restart").click(function () {
+
+            ctx.clearRect(0, 0, 800, 400);
+            //recall the start function
+            drawCircle(120);
+        });
+    </script>
+</body>
+</html>   
