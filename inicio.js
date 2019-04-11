@@ -14,6 +14,7 @@ var contexto;
 var canvas;
 
 var turno=false;
+var Edif =[];
 
 $(document).ready(function() {
     document.getElementById("jugadores").style.display = "none";
@@ -183,58 +184,41 @@ function drawSun() {
 function drawScenario(){
   drawSun();
   canvas.width = canvas.width;
-  contexto.beginPath();
-  contexto.arc(80, 420, 250, 1*Math.PI,2*Math.PI);
-  contexto.fillStyle = "green";
-  contexto.fill();
-  // draw the stroke
-  contexto.lineWidth = 2;
-  contexto.strokeStyle = "black";
-  contexto.stroke();
-
-  contexto.beginPath();
-  contexto.arc(400, 420, 200, 1*Math.PI,2*Math.PI);
-  contexto.fillStyle = "green";
-  contexto.fill();
-  // draw the stroke
-  contexto.lineWidth = 2;
-  contexto.strokeStyle = "black";
-  contexto.stroke();
-
-  contexto.beginPath();
-  contexto.arc(700, 420, 250, 1*Math.PI,2*Math.PI);
-  contexto.fillStyle = "green";
-  contexto.fill();
-  // draw the stroke
-  contexto.lineWidth = 2;
-  contexto.strokeStyle = "black";
-  contexto.stroke();
   // draw buildings
   var xc = 0;
+  
   var edificios = ['','edificio1.png','edificio2.png','edificio3.png'];
   for(var i=0; i<10;i++){
+    var aux = [];
     var n = Math.round((Math.random()*2)+1);
     var alto = Math.round((Math.random()*150)+100);
+    var dif =(350-alto)-50;
+    aux.alto=dif;
+    aux.posx = xc;
+    Edif.push(aux);
     //var ancho = Math.round((Math.random()*100)+50);
-    console.log(n);
+    //console.log(n);
     //console.log(edificios[n]);
     createImage(edificios[n],xc,alto);
     xc = xc + 70;
   }
   
+  var aleat = Math.round((Math.random()*2)+1);
+  console.log(aleat);
   var img1 = document.getElementById("conejo");
-  contexto.drawImage(img1, posx1, posy1,100,50);
+  contexto.drawImage(img1, Edif[aleat].posx, Edif[aleat].alto,100,50);
 
+  var aleat = Math.round((Math.random()*2)+6);
   var img2 = document.getElementById("conejo2");
-  contexto.drawImage(img2, posx2, posy2,100,50);
+  contexto.drawImage(img2,Edif[aleat].posx, Edif[aleat].alto,100,50);
 }
 
 function createImage(imagen, xc,alto){
   base_image = new Image();
-  console.log(imagen);
+  //console.log(imagen);
   base_image.src = imagen;
   base_image.onload = function(){
-    console.log(xc);
+    //console.log(xc);
     //var alto = (Math.random()*150)+250; w h
     contexto.drawImage(this, xc, 350-alto,70,alto);
   }
