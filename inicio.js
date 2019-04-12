@@ -13,7 +13,10 @@ var altoCan;
 var contexto;
 var canvas;
 
-var turno=false;
+var bandColision=false;
+
+var turnoPer1=false;
+var turnoPer2=false;
 var Edif =[];
 
 $(document).ready(function() {
@@ -21,6 +24,8 @@ $(document).ready(function() {
     document.getElementById("alerta").style.display = "none";
     document.getElementById("conejo").style.display = "none";
     document.getElementById("conejo2").style.display = "none";
+    document.getElementById("z1").style.display = "none";
+    document.getElementById("z2").style.display = "none";
     document.getElementById("puntaje").style.display = "none";
     document.getElementById("nombre_j1").focus();
     var nomb2 = document.getElementById("nombre_j2");
@@ -58,6 +63,7 @@ function inicia()
     this.turn_j1.addEventListener("keypress",turnoJ1);
     this.turn_j2 = document.getElementById("angulo_j2");
     this.turn_j2.addEventListener("keypress",turnoJ2);
+    generaPos();
     window.setInterval(loopJuego(),1000/60);
     //drawSun();
     //drawScenario();
@@ -88,6 +94,7 @@ function muestraj2(){
   document.getElementById("labang2").style.display = "block";
   document.getElementById("labvel2").style.display = "block";
   document.getElementById("angulo_j2").focus();
+  turnoPer2 = true;
 }
 
 function muestraj1(){
@@ -96,6 +103,7 @@ function muestraj1(){
   document.getElementById("labang1").style.display = "block";
   document.getElementById("labvel1").style.display = "block";
   document.getElementById("angulo_j1").focus();
+  turnoPer1 = true;
 }
 
 function turnoJ1(e)
@@ -105,17 +113,11 @@ function turnoJ1(e)
     var velocidad_j1 = $("#velocidad_j1").val();
     if(angulo_j1 != "" && velocidad_j1 != "" && !isNaN(angulo_j1)  && !isNaN(velocidad_j1)){
       alert("Angulo: "+angulo_j1+", Velocidad J1:"+velocidad_j1);
-      /*posPx = posx1+5;
-      posPy = posy1;
-      turno=true;
-      while(posPx<anchoCan){
-        posPx++;
-      }
-      turno=false;*/
       $("#angulo_j1").val("");
       $("#velocidad_j1").val("");
       muestraj2();
       escondej1();
+      bandColision=false;
     }
     else{
       alert("Introduzca un numero");
@@ -127,7 +129,8 @@ function loopJuego()
 {
   drawSun();
   drawScenario();
-  dibujaProyectil();
+  lanza();
+  //dibujaProyectil();
 }
 
 function turnoJ2(e)
@@ -143,6 +146,7 @@ function turnoJ2(e)
       $("#velocidad_j2").val("");
       muestraj1();
       escondej2();
+      bandColision=false;
       /*puntaje2 = puntaje2+1;
       actualizaPunt(puntaje1,puntaje2);*/
     }
@@ -181,37 +185,46 @@ function drawSun() {
   contexto.stroke();
 }
 
-function drawScenario(){
-  drawSun();
-  canvas.width = canvas.width;
-  // draw buildings
+function generaPos()
+{
   var xc = 0;
-  
-  var edificios = ['','edificio1.png','edificio2.png','edificio3.png'];
   for(var i=0; i<10;i++){
     var aux = [];
     var n = Math.round((Math.random()*2)+1);
     var alto = Math.round((Math.random()*150)+100);
-    var dif =(350-alto)-50;
-    aux.alto=dif;
+    aux.alto=alto;
     aux.posx = xc;
+    aux.n = n
     Edif.push(aux);
-    //var ancho = Math.round((Math.random()*100)+50);
-    //console.log(n);
-    //console.log(edificios[n]);
-    createImage(edificios[n],xc,alto);
     xc = xc + 70;
   }
   
   var aleat = Math.round((Math.random()*2)+1);
-  console.log(aleat);
-  var img1 = document.getElementById("conejo");
-  contexto.drawImage(img1, Edif[aleat].posx, Edif[aleat].alto,100,50);
+  posx1 = Edif[aleat].posx;
+  posy1 =  (350-Edif[aleat].alto)-50
 
-  var aleat = Math.round((Math.random()*2)+6);
+  aleat = Math.round((Math.random()*2)+6);
+  posx2 = Edif[aleat].posx;
+  posy2 =  (350-Edif[aleat].alto)-50;
+}
+
+function drawScenario(){
+  drawSun();
+  canvas.width = canvas.width;
+  // draw buildings
+  
+  var edificios = ['','edificio1.png','edificio2.png','edificio3.png'];
+  for(var i=0; i<10;i++){
+    createImage(edificios[Edif[i].n],Edif[i].posx,Edif[i].alto);
+  }
+  
+  var img1 = document.getElementById("conejo");
+  contexto.drawImage(img1, posx1, posy1,100,50);
+
   var img2 = document.getElementById("conejo2");
-  contexto.drawImage(img2,Edif[aleat].posx, Edif[aleat].alto,100,50);
-  lanza();
+  contexto.drawImage(img2,posx2, posy2,100,50);
+  generaColision(50,400);
+  //lanza();
 }
 
 function createImage(imagen, xc,alto){
@@ -225,14 +238,78 @@ function createImage(imagen, xc,alto){
   }
 }
 
-function dibujaProyectil()
+function checaColision(xProy,yProy)
 {
-  if(turno){
-    contexto.beginPath();
-    contexto.arc(posPx, posPy, 5, 0, 2 * Math.PI, true);
-    contexto.fillStyle = "#E2FFC6";
-    contexto.fill();
+  //console.log("Proy: "+ xProy + " | " + yProy);
+  for(var i=0; i<10;i++){
+    if(xProy<anchoCan)
+    {
+      //console.log("Edif: "+ Edif[i].posx + " | " + Edif[i].alto);
+      if(xProy >= Edif[i].posx-20 && xProy <= (Edif[i].posx+70) && yProy >= ((350-Edif[i].alto)-10))
+      {
+        //console.log("entro");
+        generaColision(xProy,yProy);
+        bandColision=true;
+        return;
+      }
+    }
+    else
+      return;
   }
+}
+
+function checaColisionPer(xProy,yProy)
+{
+  console.log("Proy: "+ xProy + " | " + yProy);
+  console.log("Per: "+ posx1 + " | " + posy1);
+  if(xProy >= posx1-10 && xProy<=posx1+15 && yProy >= posy1 && yProy <= posy1+50)
+  {
+    //Le dio al personaje1
+    console.log("entro1");
+    puntaje2 = puntaje2+1;
+    actualizaPunt(puntaje1,puntaje2);
+    bandColision=true;
+  }
+  else{
+    if(xProy>= posx2 && xProy<=posx2+100 && yProy >= posy2 && yProy <= posy2+50)
+    {
+      //Le dio al personaje2
+      puntaje1 = puntaje1+1;
+      actualizaPunt(puntaje1,puntaje2);
+      bandColision = true;
+    }
+  }
+}
+
+function generaColision(xCol,yCol)
+{
+  var anch, alt;
+  anch = 25;
+  alt = 15;
+  //contexto.fillStyle = 'rgb( 0, 0, 160 )';
+  contexto.fillStyle = 'blue';
+  dibujaEllipse( xCol, yCol, anch, alt );
+}
+
+function dibujaEllipse(x, y, an, al)
+{
+  var kappa, ox, oy, xe, ye, xm, ym;
+  kappa = 0.5522848;
+  ox = (an / 2) * kappa;
+  oy = (al / 2) * kappa;
+  xe = x + an;
+  ye = y + al;
+  xm = x + an / 2;
+  ym = y + al / 2;
+
+  contexto.beginPath();
+  contexto.moveTo( x, ym );
+  contexto.bezierCurveTo( x, ym - oy, xm - ox, y, xm, y );
+  contexto.bezierCurveTo( xm + ox, y, xe, ym - oy, xe, ym );
+  contexto.bezierCurveTo( xe, ym + oy, xm + ox, ye, xm, ye );
+  contexto.bezierCurveTo( xm - ox, ye, x, ym + oy, x, ym );
+  contexto.closePath();
+  contexto.fill();
 }
 
 function lanza(){
@@ -240,15 +317,24 @@ function lanza(){
   var y= 47;
   var img1 = document.getElementById("z1");
   //while(!colision){ //mientras no haya colision se va a re-dibujar
+  
     setInterval(function(){ 
       /*contexto.beginPath();
       contexto.moveTo(10, 45);
       contexto.lineTo(x, y);
       contexto.stroke();*/
-      contexto.drawImage(img1, x, y,20,10);
-
-      x += 50;
-      y += 50;
+      if(x<=640){
+        if(!bandColision){
+          contexto.drawImage(img1, x, y,20,10);
+          checaColision(x,y);
+          checaColisionPer(x,y);
+          //drawScenario();
+          x +=10;
+          y += 10;
+        }
+      }
+      else
+        return;
      }, 500);
   //}
 }
