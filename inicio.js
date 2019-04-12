@@ -211,6 +211,7 @@ function drawScenario(){
   var aleat = Math.round((Math.random()*2)+6);
   var img2 = document.getElementById("conejo2");
   contexto.drawImage(img2,Edif[aleat].posx, Edif[aleat].alto,100,50);
+  lanza();
 }
 
 function createImage(imagen, xc,alto){
@@ -232,4 +233,22 @@ function dibujaProyectil()
     contexto.fillStyle = "#E2FFC6";
     contexto.fill();
   }
+}
+
+function lanza(){
+  var x = 180;
+  var y= 47;
+  var img1 = document.getElementById("z1");
+  //while(!colision){ //mientras no haya colision se va a re-dibujar
+    setInterval(function(){ 
+      /*contexto.beginPath();
+      contexto.moveTo(10, 45);
+      contexto.lineTo(x, y);
+      contexto.stroke();*/
+      contexto.drawImage(img1, x, y,20,10);
+
+      x += 50;
+      y += 50;
+     }, 500);
+  //}
 }
